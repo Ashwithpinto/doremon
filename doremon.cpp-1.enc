@@ -1,0 +1,90 @@
+#include<windows.h>
+#include <stdio.h>
+#include <GL/glut.h>
+#include<math.h>
+void ano(int x,int y,int r,int l,int t)
+{
+
+    float m;
+    glBegin(GL_LINE_STRIP);
+    for( int angle = l; angle < t; angle ++ ){
+    m=angle*3.142/180;
+    glVertex2f( x+r*cos(m),y+r*sin(m));}
+    glEnd();
+}
+void lines()
+{
+     glBegin(GL_LINES);
+     glVertex2i(305,327);
+     glVertex2i(305,130);
+     glColor3f(1,0,0);
+     glVertex2i(0,98);
+     glVertex2i(600,98);
+     glEnd();
+
+}
+void face()
+{
+    glPushMatrix();
+    glScalef(1.0,1.0,1.0);
+    glColor3f(0,0,1);
+    ano(302,250,220,-43,224);
+    glPopMatrix();
+    glPushMatrix();
+    glScalef(0.6,0.8,0);
+    ano(210,210,220,98,228);
+    glPopMatrix();
+    glPushMatrix();
+    glScalef(0.8,0.9,0);
+    ano(320,210,220,-37,69);
+    glPopMatrix();
+}
+void eyes()
+{
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glScalef(1.1,1.0,1.0);
+    ano(270,400,35,0,360);
+    ano(340,400,35,0,360);
+    glColor3f(1,0,0);
+    ano(305,350,23,0,360);
+    glPopMatrix();
+    glColor3f(1,1,1);
+    ano(300,280,150,180,360);
+    glPushMatrix();
+    glScalef(.5,1.0,0);
+    ano(270,400,10,0,360);
+    ano(340,400,10,0,360);
+    glPopMatrix();
+}
+
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+    eyes();
+    face();
+    lines();
+    glFlush();
+}
+
+void init(void)
+{
+   glClearColor(0,0,0,0);
+   gluOrtho2D(0,600,0,600);
+   glMatrixMode(GL_MODELVIEW);
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+}
+
+int main(int argc, char *argv[])
+{
+    glutInit(&argc, argv);
+    init();
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+	glutInitWindowSize(600,600);
+	glutCreateWindow("doremon");
+	init();
+	glutDisplayFunc(display);
+	glutMainLoop();
+}
+
